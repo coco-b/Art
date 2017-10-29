@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
+
+    <!-- Modal Structure -->
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            {{ form_start(form) }}
+
+            {#{{ form_label (form.category.name) }}#}
+            {#{{ form_widget (form.category.name) }}#}
+            {#{{ form_errors (form.category.name) }}#}
+
+            {{ form_label (form.title) }}
+            {{ form_widget (form.title) }}
+            {{ form_errors (form.title) }}
+
+            {{ form_label (form.size) }}
+            {{ form_widget (form.size) }}
+            {{ form_errors (form.size) }}
+            {{ form_label (form.price) }}
+            {{ form_widget (form.price) }}
+            {{ form_errors (form.price) }}
+
+            {{ form_label (form.picture) }}
+            {{ form_widget (form.picture) }}
+            {{ form_errors (form.picture) }}
+
+
+            {{ form_label (form.link) }}
+            {{ form_widget (form.link) }}
+            {{ form_errors (form.link) }}
+
+            {{ form_widget(form.submit, {'attr' : {'class': 'btn btn-primary'}}) }}
+            {{ form_end(form) }}
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+        </div>
+    </div>
+
+
+
+<!-- Card Structure -->
+    {% for oeuvre in oeuvres %}
+        {% set i=i+1 %}
+    <div class="row">
+        <div class="col s12 m5 l6 ">
+            <div class="card">
+                <div class="card-image waves-effect waves-block waves-light">
+                    {% if oeuvre.picture is empty %}
+                        {% else %}
+                    <img class="activator" src="{{ asset('uploads/pictures/' ~ oeuvre.picture) }}">
+                            {% endif %}
+                </div>
+                <div class="card-content">
+                    <span class="card-title activator grey-text text-darken-4">{{ oeuvre.title }}<i class="material-icons right">more_vert</i></span>
+                    <p><a href="#">{{oeuvre.link}}</a></p>
+                </div>
+                <div class="card-reveal">
+                    <span class="card-title grey-text text-darken-4">{{ oeuvre.title }}<i class="material-icons right">close</i></span>
+                    <p>{{ oeuvre.description }}</p>
+                </div>
+            </div>
+        </div>
+        <div>
+            <a class="waves-effect waves-light center-align btn index_btn" href="{{ path('oeuvre_list_delete', {'id': oeuvre.id}) }}">delete</a>
+
+        </div>
+    </div>
+        {% endfor %}
+    {{ dump(oeuvre) }}
+{% endblock %}
